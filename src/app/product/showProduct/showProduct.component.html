@@ -1,0 +1,21 @@
+<div *ngFor="let product of products" class="row">
+  <div class="panel panel-primary col-md-offset-2 col-md-6" >
+    <div class="panel-heading">
+		<h2 class="panel-title">{{product.name}}</h2>
+	</div>
+    <div class="panel-body row">
+		<div class="col-md-6">
+            <p>Product ID : {{product?.name | uppercase}}</p>
+            <p>Description : {{product?.description}}</p>
+            <p>Price : {{product?.price}}</p>
+            <p>Amount : {{product?.amount}}</p>
+            <p>Rating : {{product?.rating | number : '1.1-1' }}</p>
+            <p>Pictures : </p>
+               <div *ngIf="product?.pictures">
+                  <img class="img-responsive" [src]="serverPath()+product?.pictures" [alt] = "product?.pictures">
+               </div>
+
+    </div>
+	</div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{product.name}}</td>
+                <td>{{showDescription(product)}}</td>
+                <td>{{product.price}} THB</td>
+                <td><button class="btn btn-primary" type="button" (click)="alertDetail(product)">Details</button></td>
+            </tr>
+    </tbody>
+</table>

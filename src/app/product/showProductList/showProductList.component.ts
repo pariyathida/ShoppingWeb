@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Product} from '../product';
 import {ProductDataServerService} from '../../service/product-data-server.service';
+import {Router} from '@angular/router';
 @Component({
   selector: 'showProductList',
   templateUrl: './showProductList.component.html',
@@ -9,7 +10,7 @@ import {ProductDataServerService} from '../../service/product-data-server.servic
 export class showProductListComponent {
   products: Product[]
 
-  constructor(private productDataService: ProductDataServerService) {
+  constructor(private productDataService: ProductDataServerService, private router: Router) {
   }
 
   ngOnInit() {
@@ -31,5 +32,8 @@ export class showProductListComponent {
       '\nRating : ' + product.rating.toFixed(1));
   }
 
+  editDetail(product: Product) {
+    this.router.navigate(['/edit', product.id]);
+  }
 
 }

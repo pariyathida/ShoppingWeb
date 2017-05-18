@@ -22,9 +22,9 @@ export class AuthenticationService {
         if (token) {
           // store username and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify({username: username, token: token}));
-          let product = response.json().student;
+          let user = response.json().user;
           // console.log(student);
-          // localStorage.setItem('userDetails', JSON.stringify(student));
+          localStorage.setItem('userDetails', JSON.stringify(user));
           // return true to indicate successful login
           return true;
         } else {
@@ -46,30 +46,30 @@ export class AuthenticationService {
     localStorage.removeItem('userDetails');
   }
 
-  // getCurrentUser() {
-  //   let details = localStorage.getItem('userDetails');
-  //   if (details == null || details.length == 0) {
-  //     return null;
-  //   }
-  //   return JSON.parse(localStorage.getItem('userDetails'));
-  // }
+  getCurrentUser() {
+    let details = localStorage.getItem('userDetails');
+    if (details == null || details.length === 0) {
+      return null;
+    }
+    return JSON.parse(localStorage.getItem('userDetails'));
+  }
 
-  // hasRole(role: string): boolean {
-  //   let user: any = this.getCurrentUser();
-  //
-  //   if (user) {
-  //     let roleList:string[] = role.split(",");
-  //     for(let j = 0;j < roleList.length;j++) {
-  //       let authList = user.authorities;
-  //       let userRole = 'ROLE_' + roleList[j].trim().toUpperCase();
-  //       for (let i = 0; i < authList.length; i++) {
-  //         if (authList[i].name == userRole) {
-  //           return true;
-  //         }
-  //       }
-  //     }
-  //     return false;
-  //
-  //   }
-  // }
+  hasRole(role: string): boolean {
+    let user: any = this.getCurrentUser();
+
+    if (user) {
+      let roleList: string[] = role.split('');
+      for (let j = 0; j < roleList.length; j++) {
+        let authList = user.authorities;
+        let userRole = 'ROLE_' + roleList[j].trim().toUpperCase();
+        for (let i = 0; i < authList.length; i++) {
+          if (authList[i].name === userRole) {
+            return true;
+          }
+        }
+      }
+      return false;
+
+    }
+  }
 }

@@ -14,6 +14,10 @@ import {HttpModule} from '@angular/http';
 import { LoginComponent } from './login/login.component';
 import {AuthenticationService} from './service/authentication.service';
 import {AppRoutingModule} from './app-routing.module';
+import { CartComponent } from './cart/cart.component';
+import { ViewComponent } from './product/view/view.component';
+import { EditInfoComponent } from './product/edit-info/edit-info.component';
+import { SlipComponent } from './cart/slip/slip.component';
 
 
 @NgModule({
@@ -23,7 +27,11 @@ import {AppRoutingModule} from './app-routing.module';
    showProductListComponent,
    TimeComponent,
    MenuComponent,
-   LoginComponent],
+   LoginComponent,
+   CartComponent,
+   ViewComponent,
+   EditInfoComponent,
+   SlipComponent],
  imports: [BrowserModule, FormsModule, HttpModule, ProductRoutingModule, AppRoutingModule],
  bootstrap: [AppComponent],
  providers: [ProductDataService, ProductDataServerService, AuthenticationService]

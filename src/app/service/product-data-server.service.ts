@@ -9,7 +9,7 @@ import {AuthenticationService} from './authentication.service';
 export class ProductDataServerService {
   constructor(private http: Http, private authenticationService: AuthenticationService) {
   }
-
+  carts: Product[]=[];
 
   private headers = new Headers({
     'Content-type': 'application/json',
@@ -46,14 +46,11 @@ export class ProductDataServerService {
       .catch((error: any) => {
         if (error.status === 500) {
           return Observable.throw(new Error(error.status));
-        }
-        else if (error.status === 400) {
+        } else if (error.status === 400) {
           return Observable.throw(new Error(error.status));
-        }
-        else if (error.status === 409) {
+        } else if (error.status === 409) {
           return Observable.throw(new Error(error.status));
-        }
-        else if (error.status === 406) {
+        } else if (error.status === 406) {
           return Observable.throw(new Error(error.status));
         }
         return error;
@@ -80,8 +77,52 @@ export class ProductDataServerService {
             return Observable.throw(new Error(error.status));
           });
       });
+  }
+
+  addProductnoImg(product: Product) {
+    let headers = new Headers({'Content-Type' : 'application/json'})
+    let options = new RequestOptions({headers : headers, method : 'post'})
+    let body = JSON.stringify(product)
+    return this.http.post('http://localhost:8080/product', body , options).map(res => res.json()).catch((error: any) => Observable.throw(new Error(error.status)))
+  }
+
+  findProduct(search: string) {
+    // let product: Product;
+    // let params: URLSearchParams = new URLSearchParams();
+    // params.set('search', search);
+    return this.http.get('http://localhost:8080/products?search=' + search)
+      .map(res => res.json());
+  }
+
+  getCart() {
+    return JSON.parse(localStorage.getItem('currentCart'));
+  }
+
+  deleteCart(id) {
+    this.carts = this.carts.filter(product => product.id !== id);
+
+    localStorage.setItem('currentCart', JSON.stringify(this.carts));
+  }
 
 
+  addCart(product: Product) {
+    product.id = this.carts.length + 1;
+    this.carts.push(product);
+    localStorage.setItem('currentCart', JSON.stringify(this.carts));
+  }
 
+
+  clearCart() {
+    while (this.carts.length !== 0) {
+      this.carts.pop();
+    }
+    localStorage.setItem('currentCart', JSON.stringify(this.carts));
+  }
+
+  addPurchase(product: Product) {
+    let headers = new Headers({'Content-Type' : 'application/json'})
+    let options = new RequestOptions({headers : headers, method : 'post'})
+    let body = JSON.stringify(product)
+    return this.http.post('http://localhost:8080/purches', body , options).map(res => res.json()).catch((error: any) => Observable.throw(new Error(error.status)))
   }
 }
